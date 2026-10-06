@@ -7,6 +7,13 @@ argument-hint: "<ссылки или название бизнеса>"
 ## 0. Проверка доступов
 `APIFY_TOKEN`, `VERCEL_TOKEN` заданы; `curl -sI https://api.apify.com` и `https://api.vercel.com` не 403. Чего нет — одной строкой, что добавить в настройках среды; продолжай всё, что можно без этого.
 
+## 0.5 Репо клиента
+Если текущий репо — `site-factory` (или любой чужой), **ничего клиентского сюда не коммить**: site-factory публичный, это только инструменты.
+1. Имя репо: латиницей через дефис по бизнесу (`healthy-confiteria`).
+2. Создай **приватный** репо: `GH_TOKEN="$GITHUB_PAT" gh repo create feedee-ai/<имя> --private` (или `curl -X POST https://api.github.com/user/repos -H "Authorization: Bearer $GITHUB_PAT" -d '{"name":"<имя>","private":true}'`).
+3. Подключи его к сессии инструментом `add_repo` (owner `feedee-ai`, access `push`), склонируй, `register_repo_root`, и дальше вся работа — в нём.
+4. Не вышло создать (прокси/403/нет `GITHUB_PAT`) → одной строкой попроси Александра создать пустой приватный `feedee-ai/<имя>` и написать «создал»; пока ждёшь — собирай материалы во временную папку вне site-factory, потом перенеси.
+
 ## 1. Сбор материалов → `materials/`
 Если дано только название — найди Instagram и карточку Google Maps (WebSearch).
 Apify (REST, `POST /v2/acts/<actor>/run-sync-get-dataset-items`, заголовок `Authorization: Bearer $APIFY_TOKEN`):

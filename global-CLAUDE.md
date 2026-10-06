@@ -3,7 +3,7 @@
 Владелец — Александр. Общение на русском, прямо, без воды.
 
 ## Сайты для клиентов
-Новый проект = новый чат на пустом репо клиента. Александр кидает ссылки (Instagram, Google Maps, сайт) или название бизнеса → запускай `/new-site` и доводи до ссылки на прод без лишних вопросов.
+Новый проект = новый чат на `site-factory` (репо клиента создаёшь сам, см. `/new-site` шаг 0.5) или на пустом репо клиента. Клиентское никогда не коммитить в site-factory — он публичный. Александр кидает ссылки (Instagram, Google Maps, сайт) или название бизнеса → запускай `/new-site` и доводи до ссылки на прод без лишних вопросов.
 
 - Дизайн-, motion- и UI-скиллы лежат в `~/.claude/skills` — используй их на каждом этапе (impeccable, taste-skill, soft-skill, minimalist-skill, redesign-skill, emil-design-eng, animate, apple-design, review-animations, improve-animations, find-animation-opportunities, brandkit, output-skill). Не шаблон: уровень топовых сайтов ниши.
 - Стек по умолчанию: статический сайт без сборки в `site/`, `vercel.json` с `outputDirectory: site`. Сборщик — только если реально нужен.

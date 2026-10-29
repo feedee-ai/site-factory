@@ -7,7 +7,7 @@
 
 - Планка сайта — раздел «Планка» в `~/.claude/commands/new-site.md`: продающий + уровень топов ниши, без напоминаний.
 - Маркетинговые скиллы: `customer-research`, `offers`, `copywriting`, `copy-editing`, `marketing-psychology`, `cro`, `schema`.
-- Дизайн-, motion- и UI-скиллы лежат в `~/.claude/skills` — используй их на каждом этапе (impeccable, taste-skill, soft-skill, minimalist-skill, redesign-skill, emil-design-eng, animate, apple-design, review-animations, improve-animations, find-animation-opportunities, brandkit, output-skill). Не шаблон: уровень топовых сайтов ниши.
+- Дизайн-, motion- и UI-скиллы лежат в `~/.claude/skills` — используй их на каждом этапе (impeccable, taste-skill, soft-skill, minimalist-skill, redesign-skill, emil-design-eng, animate, apple-design, review-animations, improve-animations, find-animation-opportunities, brandkit, output-skill). 3D/WebGL и кинематографичный скролл — `threejs` (роутер по `threejs-*`), `gsap-*`, `build-awwwards-quality-sites`, `webgl-3d-object`, `3d-metal-material`, `shader-glsl`, `cinematic-scroll-storytelling`, `video-to-superprompt` (разбор видео-референса). Не шаблон: уровень топовых сайтов ниши.
 - Стек по умолчанию: статический сайт без сборки в `site/`, `vercel.json` с `outputDirectory: site`. Сборщик — только если реально нужен.
 - Цен нет → «по консультации», цены в конфиге. Запись — демо-форма → готовое сообщение в WhatsApp владельца.
 - Языки: по аудитории из отзывов/постов (минимум язык страны + EN; RU, если есть русскоязычная аудитория).

@@ -231,6 +231,14 @@ function collect({ IGNORE, touch }) {
     const ar = ix * iy, sm = Math.min(a.r.width * a.r.height, b.r.width * b.r.height);
     if (sm > 0 && ar / sm > 0.25) out.overlap.push(`${desc(a.el)} ⟂ ${desc(b.el)}`);
   }
+  if (scrollY < 2) {
+    const fixedTop = [...document.querySelectorAll('body *')].filter((e) => { const t = getComputedStyle(e); const q = e.getBoundingClientRect(); return t.position === 'fixed' && q.top <= 1 && q.height > 20 && q.height < H * 0.4 && q.width > W * 0.5 && t.visibility !== 'hidden'; });
+    for (const { el, r } of leafText) for (const f of fixedTop) { const q = f.getBoundingClientRect(); if (r.top < q.bottom - 2 && r.bottom > q.top && r.right > q.left && r.left < q.right) out.overlap.push(`${desc(el)} на першому екрані залазить під ${desc(f)}`); }
+  }
+  for (const m of document.querySelectorAll('img, video, canvas, picture')) {
+    const q = m.getBoundingClientRect(); if (!q.width || !vis(m) || ign(m) || m.closest('[aria-hidden="true"]')) continue;
+    if (q.height > H * 1.15 && q.width > W * 0.6 && getComputedStyle(m).objectFit === 'cover' && !m.closest('[data-qa-tall]')) out.tall = (out.tall || []).concat(`${desc(m.closest('[class]') || m)} — кадр ${Math.round(q.height)}px при висоті екрана ${H}px`);
+  }
   out.scrollWidth = document.documentElement.scrollWidth; out.W = W;
   return out;
 }
@@ -256,7 +264,7 @@ async function runViewport(vp, mode = 'normal') {
   page.on('requestfailed', (r) => { const f = r.failure()?.errorText || ''; if (!/ERR_ABORTED/.test(f)) add('blocker', 'Запити з помилкою', tag, `${f} ${r.url().replace(URL0, '/')}`); });
   await page.addInitScript(() => { window.__cls = 0; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__cls += e.value; }).observe({ type: 'layout-shift', buffered: true }); } catch {} });
   await page.goto(URL0, { waitUntil: 'networkidle', timeout: 60000 }).catch((e) => add('blocker', 'Завантаження', tag, e.message.slice(0, 160)));
-  await page.waitForTimeout(mode === 'normal' ? 2500 : 1200);
+  await page.waitForTimeout(mode === 'normal' ? (CFG.introWait || 4500) : 1200);
 
   // перший екран
   const fold = await page.evaluate((cta) => {
@@ -292,6 +300,7 @@ async function runViewport(vp, mode = 'normal') {
     data.textOverflow.forEach((m) => add('blocker', 'Текст вилазить з коробки', tag, m));
     data.overlap.forEach((m) => add('blocker', 'Накладання тексту', tag, m));
     data.clipped.forEach((m) => add('warning', 'Обрізаний текст', tag, m));
+    (data.tall || []).forEach((m) => add('blocker', 'Кадр вищий за екран (видно лише шматок)', tag, m));
     data.tap.forEach((t) => add(t.min < 32 ? 'blocker' : 'warning', 'Зона натискання', tag, `${t.d} — ${t.min}px (норма ≥ 44)`));
     data.small.forEach((m) => add(parseFloat(m.split('—')[1]) < 9 ? 'blocker' : 'warning', 'Дрібний шрифт', tag, m));
     data.covered.forEach((m) => add('blocker', 'Перекрито фіксованим шаром', tag, m));

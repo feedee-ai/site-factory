@@ -3,9 +3,10 @@
 # Запускается из Setup script облачной среды (один раз на старте каждой сессии).
 set -uo pipefail
 SRC="$(cd "$(dirname "$0")" && pwd)"
-mkdir -p ~/.claude/skills ~/.claude/commands
+mkdir -p ~/.claude/skills ~/.claude/commands ~/.claude/scripts
 cp -r "$SRC"/skills/* ~/.claude/skills/
 cp "$SRC"/commands/*.md ~/.claude/commands/
+cp "$SRC"/scripts/* ~/.claude/scripts/
 cp "$SRC"/global-CLAUDE.md ~/.claude/CLAUDE.md
 if [ ! -f ~/.claude/settings.json ]; then
   cp "$SRC"/global-settings.json ~/.claude/settings.json
